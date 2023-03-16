@@ -1,37 +1,51 @@
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
           integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
 </head>
 <body>
 <div class="container">
-    <div class="card">
-        <div th:each="pedido : ${pedidos}">
-            <div class="card-header" th:text="${pedido.nomeProduto}">Nome do produto</div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-md-8 col-sm-12 mb-3">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-5">Valor: <span
-                                    th:text="${pedido.valorNegociado}">200,99</span>
-                            </div>
-                            <div class="col-sm-12 col-md-7">Data da entrega:
-                                <span th:text="${pedido.dataDataEntrega}">10/02/2020</span>
-                            </div>
+    <div class="jumbotron container-fluid mb-0">
+        <h1 class="display-4 fw-bold">Pedidos</h1>
+    </div>
+    <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
+        <div class="navbar-nav">
+            <a class="nav-link active" href="">Todos</a>
+            <a class="nav-link" href="">Aguardando</a>
+            <a class="nav-link" href="">Aprovado</a>
+            <a class="nav-link" href="">Entregue</a>
+        </div>
+        <a href="/pedido/formulario">
+            <button class="btn btn-outline-secondary my-2 my-sm-0">Novo</button>
+        </a>
+
+    </nav>
+    <div class="card mb-3" th:each="pedido : ${pedidos}">
+        <div class="card-header" th:text="${pedido.nomeProduto}">Nome do produto</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-8 col-sm-12 mb-3">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-5">Valor: <span
+                                th:text="${pedido.valorNegociado}">200,99</span>
                         </div>
-                        <div>Produto</div>
-                        <div>
-                            <input class="form-control" th:value="${pedido.urlProduto}" value="url do produto"/>
-                        </div>
-                        <div>Descricao</div>
-                        <div>
-                            <textarea th:text="${pedido.descricao}" class="form-control" aria-label="With textarea">descrição do pedido</textarea>
+                        <div class="col-sm-12 col-md-7">Data da entrega:
+                            <span th:text="${pedido.dataDataEntrega}">10/02/2020</span>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-12">
-                        <img th:src="${pedido.urlImagem}" class="img-thumbnail" src=""/>
+                    <div>Produto</div>
+                    <div>
+                        <input class="form-control" th:value="${pedido.urlProduto}" value="url do produto"/>
                     </div>
+                    <div>Descricao</div>
+                    <div>
+                        <textarea th:text="${pedido.descricao}" class="form-control" aria-label="With textarea">descrição do pedido</textarea>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <img th:src="${pedido.urlImagem}" class="img-thumbnail" src=""/>
                 </div>
             </div>
         </div>

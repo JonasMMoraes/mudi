@@ -1,24 +1,27 @@
-package br.com.alura.mudi.model;
+package br.com.alura.mudi.dto;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import br.com.alura.mudi.models.Pedido;
+import jakarta.validation.constraints.NotBlank;
 
-public class Pedido {
+public class RequisicaoNovoPedido {
 
+    @NotBlank
     private String nomeProduto;
-    private BigDecimal valorNegociado;
-    private LocalDate dataDataEntrega;
+
+    @NotBlank
     private String urlProduto;
+
+    @NotBlank
     private String urlImagem;
+
+    @NotBlank
     private String descricao;
 
-    public Pedido() {
+    public RequisicaoNovoPedido() {
     }
 
-    public Pedido(String nomeProduto, BigDecimal valorNegociado, LocalDate dataDataEntrega, String urlProduto, String urlImagem, String descricao) {
+    public RequisicaoNovoPedido(String nomeProduto, String urlProduto, String urlImagem, String descricao) {
         this.nomeProduto = nomeProduto;
-        this.valorNegociado = valorNegociado;
-        this.dataDataEntrega = dataDataEntrega;
         this.urlProduto = urlProduto;
         this.urlImagem = urlImagem;
         this.descricao = descricao;
@@ -30,22 +33,6 @@ public class Pedido {
 
     public void setNomeProduto(String nomeProduto) {
         this.nomeProduto = nomeProduto;
-    }
-
-    public BigDecimal getValorNegociado() {
-        return valorNegociado;
-    }
-
-    public void setValorNegociado(BigDecimal valorNegociado) {
-        this.valorNegociado = valorNegociado;
-    }
-
-    public LocalDate getDataDataEntrega() {
-        return dataDataEntrega;
-    }
-
-    public void setDataDataEntrega(LocalDate dataDataEntrega) {
-        this.dataDataEntrega = dataDataEntrega;
     }
 
     public String getUrlProduto() {
@@ -70,5 +57,14 @@ public class Pedido {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public Pedido toPedido() {
+        Pedido pedido = new Pedido();
+        pedido.setDescricao(descricao);
+        pedido.setNomeProduto(nomeProduto);
+        pedido.setUrlImagem(urlImagem);
+        pedido.setUrlProduto(urlProduto);
+        return pedido;
     }
 }

@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron container-fluid mb-3">
+        <h1 class="display-4 fw-bold">Novo Pedido</h1>
+    </div>
+    <div class="card">
+        <form th:object="${requisicaoNovoPedido}" class="card-body needs-validation" action="/pedido/novo"
+              method="post">
+            <div class="form-group">
+
+                <label>Produto</label>
+                <input th:field="*{nomeProduto}" class="form-control" placeholder="nome do produto"/>
+                <small>Informa qual o nome do produto</small>
+            </div>
+            <div class="form-group">
+                <label>Url</label>
+                <input th:value="*{urlProduto}" th:name="urlProduto" th:id="urlProduto" class="form-control"
+                       placeholder="url do produto"/>
+                <small>Procure em um site por um produto que você deseja</small>
+            </div>
+            <div class="form-group">
+                <label>Imagem</label>
+                <input th:filed="*{urlImagem}" class="form-control"
+                       placeholder="url da imagem"/>
+                <small>Copia a url de uma boa imagem do produto e cole aqui para conseguir compradores</small>
+            </div>
+            <div class="form-group">
+                <label>Descricao</label>
+                <textarea th:filed="*{descricao}" class="form-control"
+                          placeholder="Adicione detalhes importantes para ajudar o comprador"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Cadastrar</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
