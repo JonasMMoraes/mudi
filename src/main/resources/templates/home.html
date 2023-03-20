@@ -1,21 +1,17 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8"/>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-</head>
+<head th:replace="~{base :: head}"></head>
 <body>
+<div th:insert="base :: Logo"></div>
 <div class="container">
-    <div class="jumbotron container-fluid mb-0">
-        <h1 class="display-4 fw-bold">Pedidos</h1>
-    </div>
+    <div th:replace="~{base :: jumbotron('Meus Pedidos')}"></div>
     <nav class="navbar navbar-expand navbar-light bg-light d-flex justify-content-between mb-3">
         <div class="navbar-nav">
-            <a class="nav-link active" href="">Todos</a>
-            <a class="nav-link" href="">Aguardando</a>
-            <a class="nav-link" href="">Aprovado</a>
-            <a class="nav-link" href="">Entregue</a>
+            <a th:classappend="${status} == null ? 'active' : ''" class="nav-link" href="/home">Todos</a>
+            <a th:classappend="${status} == 'aguardando' ? 'active' : ''" class="nav-link" href="/home/aguardando">Aguardando</a>
+            <a th:classappend="${status} == 'aprovado' ? 'active' : ''" class="nav-link"
+               href="/home/aprovado">Aprovado</a>
+            <a th:classappend="${status} == 'entregue' ? 'active' : ''" class="nav-link"
+               href="/home/entregue">Entregue</a>
         </div>
         <a href="/pedido/formulario">
             <button class="btn btn-outline-secondary my-2 my-sm-0">Novo</button>
@@ -23,16 +19,26 @@
 
     </nav>
     <div class="card mb-3" th:each="pedido : ${pedidos}">
-        <div class="card-header" th:text="${pedido.nomeProduto}">Nome do produto</div>
+        <th:block th:switch="${pedido.status.name()}">
+            <div th:case="'AGUARDANDO'" class="card-header alert-warning" th:text="${pedido.nomeProduto}">Nome do
+                produto
+            </div>
+            <div th:case="'APROVADO'" class="card-header alert-success" th:text="${pedido.nomeProduto}">Nome do
+                produto
+            </div>
+            <div th:case="'ENTREGUE'" class="card-header alert-dark" th:text="${pedido.nomeProduto}">Nome do produto
+            </div>
+        </th:block>
         <div class="card-body">
             <div class="row">
                 <div class="col-md-8 col-sm-12 mb-3">
                     <div class="row">
-                        <div class="col-sm-12 col-md-5">Valor: <span
-                                th:text="${pedido.valorNegociado}">200,99</span>
+                        <div class="col-sm-12 col-md-5">Valor:
+                            <!--                            <span th:text="${#numbers.formatCurrency(pedido.valorNegociado)}">200,99</span>-->
+                            <span th:text="${'R$' + #numbers.formatDecimal(pedido.valorNegociado,3,'POINT', 2, 'COMMA')}">200,99</span>
                         </div>
                         <div class="col-sm-12 col-md-7">Data da entrega:
-                            <span th:text="${pedido.dataDataEntrega}">10/02/2020</span>
+                            <span th:text="${#temporals.format(pedido.dataDataEntrega, 'dd/MM/yyyy')}">10/02/2020</span>
                         </div>
                     </div>
                     <div>Produto</div>

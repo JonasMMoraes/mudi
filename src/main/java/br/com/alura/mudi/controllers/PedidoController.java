@@ -10,7 +10,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 
 @Controller
@@ -21,11 +20,8 @@ public class PedidoController {
     private PedidoRepository pedidoRepository;
 
     @GetMapping(value = "formulario")
-    public ModelAndView formulario() {
-        ModelAndView mv = new ModelAndView("/pedido/formulario");
-        mv.addObject("requisicaoNovoPedido", new RequisicaoNovoPedido());
-
-        return mv;
+    public String formulario(RequisicaoNovoPedido requisicaoNovoPedido) {
+        return "/pedido/formulario";
     }
 
     @PostMapping(value = "novo")
@@ -36,7 +32,7 @@ public class PedidoController {
 
         Pedido pedido = requisicao.toPedido();
         pedidoRepository.save(pedido);
-        return "pedido/formulario";
+        return "redirect:/home";
 
     }
 
